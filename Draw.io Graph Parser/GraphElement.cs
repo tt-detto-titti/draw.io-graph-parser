@@ -9,16 +9,17 @@ namespace Draw.io_Graph_Parser
     {
         public XmlNode Node { get; protected set; }
         public string Id { get; protected set; }
-        private string value = "";
+        private string vl = "";
         public string Value
         {
             get
             {
-                return value;
+                return vl;
             }
             set
             {
-                SetAttributeInnerText("value", value);
+                vl = value;
+                SetAttributeInnerText("value", vl);
             }
         }
         public List<KeyValuePair<string, string>> StyleProperties { get; protected set; }

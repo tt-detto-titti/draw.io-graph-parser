@@ -12,9 +12,7 @@ namespace Draw.io_Graph_Parser
         public Text(XmlNode node, List<KeyValuePair<string, string>> styleProperties, GraphElement parent) : base(node, styleProperties)
         {
             Parent = parent;
-
-            if (Parent is Edge)
-                ((Edge)Parent).Value = Value;
+            Parent.Value = Value;
         }
 
         public Text(XmlNode node, GraphElement parent) : this(node, LoadStyleProperties(node), parent) { }
