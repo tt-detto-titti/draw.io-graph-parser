@@ -7,84 +7,97 @@ namespace Draw.io_Graph_Parser
 {
     public abstract class GraphElement
     {
-        public static XmlDocument Graph { get; private set; }
         public XmlNode Node { get; protected set; }
         public string Id { get; protected set; }
-        public List<KeyValuePair<string, string>> StyleProperties { get; protected set; }       
-
-        public GraphElement(XmlNode node)
-        {            
-            try
+        private string value = "";
+        public string Value
+        {
+            get
             {
-                Node = node;
-                Id = GetAttributeInnerText("id");
-                StyleProperties = new List<KeyValuePair<string, string>>();
-
-                foreach (string property in GetAttributeInnerText("style").Split(';'))
-                    if (property != "")
-                    {
-                        string[] info = property.Split('=');
-                        StyleProperties.Add(new KeyValuePair<string, string>(
-                            info[0],
-                            info.Length > 1 ? info[1] : null));
-                    }
+                return value;
             }
-            catch (XmlException e)
+            set
             {
-                throw new XmlException(e.Message);
+                SetAttributeInnerText("value", value);
             }
+        }
+        public List<KeyValuePair<string, string>> StyleProperties { get; protected set; }
+
+        public GraphElement(XmlNode node, List<KeyValuePair<string, string>> styleProperties)
+        {
+            Node = node;
+            Id = GetAttributeInnerText("id");
+            Value = GetAttributeInnerText("value");
+            StyleProperties = styleProperties;
+        }
+
+        public GraphElement(XmlNode node) : this(node, LoadStyleProperties(node)) { }
+
+        public static List<KeyValuePair<string, string>> LoadStyleProperties(XmlNode node)
+        {
+            XmlNode attr = node.Attributes.GetNamedItem("style");
+
+            if (attr == null)
+                throw new XmlException("The node doesn't contain a style attribute.");
+
+            List<KeyValuePair<string, string>> prpts = new List<KeyValuePair<string, string>>();
+            foreach (string property in attr.InnerText.Split(';'))
+                if (property != "")
+                {
+                    string[] info = property.Split('=');
+                    prpts.Add(new KeyValuePair<string, string>(
+                        info[0],
+                        info.Length > 1 ? info[1] : ""));
+                }
+
+            return prpts;
         }
 
         public string GetStylePropertyValue(string property)
         {
             KeyValuePair<string, string>? prpt = StyleProperties.Find(x => x.Key == property);
-
-            if (prpt == null)
-                throw new XmlException("The property {0} doesn't exist in the style attribute.");
-
-            return prpt.Value.Value;
+            return prpt.HasValue ? prpt.Value.Value : null;
         }
 
         public void SetStylePropertyValue(string property, string value)
         {
             KeyValuePair<string, string>? prpt = StyleProperties.Find(x => x.Key == property);
 
+            if (prpt.HasValue) StyleProperties.Remove(prpt.Value);
+
             prpt = new KeyValuePair<string, string>(property, value);
+            StyleProperties.Add(prpt.Value);
             SetAttributeInnerText("style", StylePropertiesToString());
-        }
-
-        private string StylePropertiesToString()
-        {
-            string s = "";
-
-            foreach (KeyValuePair<string, string> prpt in StyleProperties)
-                s += prpt.Key + "=" + prpt.Value + ";";
-
-            return s;
         }
 
         public string GetAttributeInnerText(string attribute)
         {
             XmlNode attr = Node.Attributes.GetNamedItem(attribute);
-
-            if (attr == null)
-                throw new XmlException(string.Format("The attribute {0} doesn't exist in the node.", attribute));
-
-            return attr.InnerText;
+            return attr != null ? attr.InnerText : null;
         }
 
         public void SetAttributeInnerText(string attribute, string innerText)
         {
             XmlNode attr = Node.Attributes.GetNamedItem(attribute);
 
-            if (attr == null)
+            if (attr != null)
+                attr.InnerText = innerText;
+            else
             {
-                attr = Graph.CreateAttribute(attribute);
+                attr = Node.OwnerDocument.CreateAttribute(attribute);
                 attr.InnerText = innerText;
                 Node.Attributes.SetNamedItem(attr);
             }
-            else
-                attr.InnerText = innerText;
         }
+
+        private string StylePropertiesToString()
+        {
+            string prpts = "";
+
+            foreach (KeyValuePair<string, string> prpt in StyleProperties)
+                prpts += prpt.Key + "=" + prpt.Value + ";";
+
+            return prpts;
+        }        
     }
 }

@@ -21,10 +21,12 @@ namespace Draw.io_Graph_Parser
     {
         public List<NavigableNeighbour> Neighbours { get; private set; }
 
-        public Vertex(XmlNode node) : base(node)
+        public Vertex(XmlNode node, List<KeyValuePair<string, string>> styleProperties) : base(node, styleProperties)
         {
             Neighbours = new List<NavigableNeighbour>();
         }
+
+        public Vertex(XmlNode node) : this(node, LoadStyleProperties(node)) { }
 
         public void AddNeighbour(NavigableNeighbour neighbour)
         {

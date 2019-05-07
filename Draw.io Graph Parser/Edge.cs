@@ -9,32 +9,24 @@ namespace Draw.io_Graph_Parser
     {
         public Vertex Source { get; private set; }
         public Vertex Target { get; private set; }
-        public double Cost { get; private set; }
         public bool IsBidirectional { get; private set; }
 
-        public Edge(XmlNode node) : base(node)
+        public Edge(XmlNode node, List<KeyValuePair<string, string>> styleProperties, Vertex source, Vertex target) : base(node, styleProperties)
         {
-            try
-            {
-                Source = GraphParser.GetVertexById(GetAttributeInnerText("source"));
-                Target = GraphParser.GetVertexById(GetAttributeInnerText("target"));
+            Source = source;
+            Target = target;
 
-                if ((IsArrowPresent("startArrow") && IsArrowPresent("endArrow")) ||
-                    (!IsArrowPresent("startArrow") && !IsArrowPresent("endArrow")))
-                    IsBidirectional = true;
-                else                
-                    IsBidirectional = false;
+            if ((IsArrowPresent("startArrow") && IsArrowPresent("endArrow")) ||
+                (!IsArrowPresent("startArrow") && !IsArrowPresent("endArrow")))
+                IsBidirectional = true;
+            else
+                IsBidirectional = false;
 
-                if (IsArrowPresent("startArrow"))
-                {
-                    Vertex swap = Source;
-                    Source = Target;
-                    Target = swap;
-                }
-            }
-            catch (XmlException e)
+            if (IsArrowPresent("startArrow"))
             {
-                throw new XmlException(e.Message);
+                Vertex swap = Source;
+                Source = Target;
+                Target = swap;
             }
         }
 
