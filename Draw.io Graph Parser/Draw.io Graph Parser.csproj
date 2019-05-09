@@ -5,4 +5,8 @@
     <RootNamespace>Draw.io_Graph_Parser</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\tommi\Documents\GitHub\draw.io-graph-parser\Draw.io Graph Parser\Draw.io Graph Parser.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>

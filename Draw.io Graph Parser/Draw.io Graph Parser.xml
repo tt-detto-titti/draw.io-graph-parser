@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Draw.io Graph Parser</name>
+    </assembly>
+    <members>
+        <member name="T:Draw.io_Graph_Parser.GraphElement">
+            <summary>
+            Class <c>GraphElement</c> is the basic class all the elements in a graph must derive from.
+            </summary>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphElement.Node">
+            <value>
+            Property <c>Node</c> represents the <see cref="T:System.Xml.XmlNode"/> the graph element comes from.
+            </value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphElement.Id">
+            <value>
+            Property <c>Id</c> represents the univocal identificator for the graph element.
+            </value>
+        </member>
+        <member name="F:Draw.io_Graph_Parser.GraphElement.vl">
+            <summary>
+            Istance variable <c>vl</c> represents the value of the graph element.
+            </summary>
+            <remarks>
+            For <see cref="T:Draw.io_Graph_Parser.Vertex">Vertices</see>, the value represents the human-readable id of the vertex; for <see cref="T:Draw.io_Graph_Parser.Edge"/>-s, it represents the cost; for <see cref="T:Draw.io_Graph_Parser.Text"/>-s, it represents the text itself.
+            </remarks>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphElement.Value">
+            <value>
+            Property <c>Value</c> represents the value of the graph element.
+            </value>
+            <remarks>
+            For <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s, the value represents the human-readable id of the vertex; for <see cref="T:Draw.io_Graph_Parser.Edge"/>-s, it represents the cost; for <see cref="T:Draw.io_Graph_Parser.Text"/>-s, it represents the text itself.
+            </remarks>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphElement.StyleProperties">
+            <value>
+            Property <c>StyleProperties</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the graph element (such as the type).
+            </value>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.#ctor(System.Xml.XmlNode,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            This constructor initializes the new <c>GraphElement</c> from a <see cref="T:System.Xml.XmlNode"/> and pre-calculated <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/>.
+            </summary>
+            <remarks>
+            This constructor is useful when you extract the <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> from the <see cref="T:System.Xml.XmlNode"/> using <see cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>, in order to choose the subclass of the graph element, and you don't want to re-extract them when initializing the object.
+            </remarks>
+            <seealso cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the graph element.</param>
+            <param name="styleProperties">The <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the graph element (such as the type).</param>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.#ctor(System.Xml.XmlNode)">
+            <summary>
+            This constructor initializes the new <c>GraphElement</c> from a <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the graph element.</param>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)">
+            <summary>
+            This method extracts a <see cref="T:System.Collections.Generic.List`1"/> of style properties from a <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> from which the properties are extracted.</param>
+            <returns>The <see cref="T:System.Collections.Generic.List`1"/> of properties.</returns>
+            <exception cref="T:System.Xml.XmlException">
+            Thrown when the <see cref="T:System.Xml.XmlNode"/> doesn't contain a style <see cref="T:System.Xml.XmlAttribute"/>.
+            </exception>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.GetStylePropertyValue(System.String)">
+            <summary>
+            This method returns the value of <paramref name="property"/> style property.
+            </summary>
+            <param name="property">The name of the style property whose value you want to get.</param>
+            <returns>The value of the style property, <c>null</c> if the property doesn't exist.</returns>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.SetStylePropertyValue(System.String,System.String)">
+            <summary>
+            This method sets the <paramref name="value"/> of <paramref name="property"/> style property.
+            </summary>
+            <param name="property">The name of the style property whose value you want to set.</param>
+            <param name="value">The value you want to set.</param>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.GetAttributeInnerText(System.String)">
+            <summary>
+            This methods returns the inner text of <paramref name="attribute"/> <see cref="T:System.Xml.XmlAttribute"/>.
+            </summary>
+            <param name="attribute">The name of the <see cref="T:System.Xml.XmlAttribute"/> whose inner text you want to get.</param>
+            <returns>The inner text of the <see cref="T:System.Xml.XmlAttribute"/>, <c>null</c> if the <see cref="T:System.Xml.XmlAttribute"/> doesn't exist.</returns>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.SetAttributeInnerText(System.String,System.String)">
+            <summary>
+            This method sets the <paramref name="innerText"/> of <paramref name="attribute"/> <see cref="T:System.Xml.XmlAttribute"/>.
+            </summary>
+            <param name="attribute">The name of the <see cref="T:System.Xml.XmlAttribute"/> whose inner text you want to set.</param>
+            <param name="innerText">The inner text to set.</param>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphElement.StylePropertiesToString">
+            <summary>
+            This method converts the <see cref="T:System.Collections.Generic.List`1"/> of style properties to a string.
+            </summary>
+            <remarks>
+            It's used to update the style <see cref="T:System.Xml.XmlAttribute"/> in a node when one of its properties changes.
+            </remarks>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
