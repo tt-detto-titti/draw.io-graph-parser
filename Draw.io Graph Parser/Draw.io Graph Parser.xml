@@ -135,17 +135,42 @@
             <summary>This constructor initializes the new <c>GraphParser</c> from a <see cref="T:System.Xml.XmlDocument"/>.</summary>
             <param name="xmlFilePath">The path of the XML file.</param>
             <remarks>The XML file can be made with https://www.draw.io/. When exporting it, it's fundamental to uncheck the <em>Compressed</em> option.</remarks>
-            <exception cref="T:System.Exception">Thrown when it's impossible to load the graph.</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Exception"></exception>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphParser.GetVertexById(System.String)">
             <summary>Gets the <see cref="T:Draw.io_Graph_Parser.Vertex"/> in <see cref="P:Draw.io_Graph_Parser.GraphParser.Vertices"/> with the specified id.</summary>
             <param name="id">The id of the <see cref="T:Draw.io_Graph_Parser.Vertex"/>.</param>
             <returns>The <see cref="T:Draw.io_Graph_Parser.Vertex"/>, <c>null</c> if it can't be found.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphParser.GetEdgeById(System.String)">
             <summary>Gets the <see cref="T:Draw.io_Graph_Parser.Edge"/> in <see cref="P:Draw.io_Graph_Parser.GraphParser.Edges"/> with the specified id.</summary>
             <param name="id">The id of the <see cref="T:Draw.io_Graph_Parser.Edge"/>.</param>
             <returns>The <see cref="T:Draw.io_Graph_Parser.Edge"/>, <c>null</c> if it can't be found.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphParser.LoadVertices(System.Collections.Generic.List{Draw.io_Graph_Parser.GraphParser.CommonElement})">
+            <summary>Loads all the <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s from the <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/>-s.</summary>
+            <param name="elements">The <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/>-s from which all the <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s are taken.</param>
+            <remarks>When a <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/> is used, it is also removed from the list.</remarks>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphParser.LoadEdges(System.Collections.Generic.List{Draw.io_Graph_Parser.GraphParser.CommonElement})">
+            <summary>Loads all the <see cref="T:Draw.io_Graph_Parser.Edge"/>-s from the <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/>-s.</summary>
+            <param name="elements">The <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/>-s from which all the <see cref="T:Draw.io_Graph_Parser.Edge"/>-s are taken.</param>
+            <remarks>When a <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/> is used, it is also removed from the list.</remarks>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphParser.LoadTexts(System.Collections.Generic.List{Draw.io_Graph_Parser.GraphParser.CommonElement})">
+            <summary>Loads all the <see cref="T:Draw.io_Graph_Parser.Text"/>-s from the <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/>-s.</summary>
+            <param name="elements">The <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/>-s from which all the <see cref="T:Draw.io_Graph_Parser.Text"/>-s are taken.</param>
+            <remarks>When a <see cref="T:Draw.io_Graph_Parser.GraphParser.CommonElement"/> is used, it is also removed from the list.</remarks>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphParser.CreateLinks">
+            <summary>Lets all the <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s know who are their <see cref="T:Draw.io_Graph_Parser.NavigableNeighbor"/>-s.</summary>
+        </member>
+        <member name="T:Draw.io_Graph_Parser.GraphParser.CommonElement">
+            <summary>Class <c>CommonElement</c> represents an element in a graph which type hasn't been decided yet.</summary>
+            <seealso cref="T:Draw.io_Graph_Parser.GraphElement"/>
         </member>
         <member name="T:Draw.io_Graph_Parser.Text">
             <summary>Class <c>Text</c> represents some text in the graph, usually the cost of an edge.</summary>
