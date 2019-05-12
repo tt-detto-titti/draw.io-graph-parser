@@ -114,6 +114,39 @@
             will result: "ellipse;fillColor=#FFD700;". It's important to notice that since the ellipse property doesn't have a value, in the string the <c>=</c> sign is omitted.
             </example>
         </member>
+        <member name="T:Draw.io_Graph_Parser.GraphParser">
+            <summary>Class <c>GraphParser</c> takes a graph in XML format made with https://www.draw.io/ and parses it.</summary>
+            <remarks>The XML file must be uncompressed.</remarks>
+            <seealso cref="T:System.Xml.XmlDocument"/>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphParser.Graph">
+            <value>The property <c>Graph</c> represents the whole graph in XML format.</value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphParser.Vertices">
+            <value>The property <c>Vertices</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the vertices of the graph.</value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphParser.Edges">
+            <value>The property <c>Edges</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the edges of the graph.</value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.GraphParser.Texts">
+            <value>The property <c>Texts</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the texts of the graph. Usually they are the cost of the edges.</value>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphParser.#ctor(System.String)">
+            <summary>This constructor initializes the new <c>GraphParser</c> from a <see cref="T:System.Xml.XmlDocument"/>.</summary>
+            <param name="xmlFilePath">The path of the XML file.</param>
+            <remarks>The XML file can be made with https://www.draw.io/. When exporting it, it's fundamental to uncheck the <em>Compressed</em> option.</remarks>
+            <exception cref="T:System.Exception">Thrown when it's impossible to load the graph.</exception>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphParser.GetVertexById(System.String)">
+            <summary>Gets the <see cref="T:Draw.io_Graph_Parser.Vertex"/> in <see cref="P:Draw.io_Graph_Parser.GraphParser.Vertices"/> with the specified id.</summary>
+            <param name="id">The id of the <see cref="T:Draw.io_Graph_Parser.Vertex"/>.</param>
+            <returns>The <see cref="T:Draw.io_Graph_Parser.Vertex"/>, <c>null</c> if it can't be found.</returns>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.GraphParser.GetEdgeById(System.String)">
+            <summary>Gets the <see cref="T:Draw.io_Graph_Parser.Edge"/> in <see cref="P:Draw.io_Graph_Parser.GraphParser.Edges"/> with the specified id.</summary>
+            <param name="id">The id of the <see cref="T:Draw.io_Graph_Parser.Edge"/>.</param>
+            <returns>The <see cref="T:Draw.io_Graph_Parser.Edge"/>, <c>null</c> if it can't be found.</returns>
+        </member>
         <member name="T:Draw.io_Graph_Parser.Text">
             <summary>Class <c>Text</c> represents some text in the graph, usually the cost of an edge.</summary>
             <seealso cref="T:Draw.io_Graph_Parser.GraphElement"/>
