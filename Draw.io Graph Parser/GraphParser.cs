@@ -7,7 +7,7 @@ namespace Draw.io_Graph_Parser
     /// <summary>Class <c>GraphParser</c> takes a graph in XML format made with https://www.draw.io/ and parses it.</summary>
     /// <remarks>The XML file must be uncompressed.</remarks>
     /// <seealso cref="XmlDocument"/>
-    public abstract class GraphParser
+    public class GraphParser
     {
         /// <value>The property <c>Graph</c> represents the whole graph in XML format.</value>
         public XmlDocument Graph { get; private set; }
