@@ -4,105 +4,171 @@
         <name>Draw.io Graph Parser</name>
     </assembly>
     <members>
+        <member name="T:Draw.io_Graph_Parser.Edge">
+            <summary>Class <c>Edge</c> represents the connecting edge between two vertices in a graph.</summary>
+            <seealso cref="T:Draw.io_Graph_Parser.GraphElement"/>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.Edge.Source">
+            <value>Property <c>Source</c> represents the <see cref="T:Draw.io_Graph_Parser.Vertex"/> from which the edge starts.</value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.Edge.Target">
+            <value>Property <c>Target</c> represents the <see cref="T:Draw.io_Graph_Parser.Vertex"/> on which the edge ends.</value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.Edge.IsBidirectional">
+            <value>Property <c>IsBidirectional</c> indicates whether this edge can be navigated in both directions.</value>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.Edge.#ctor(System.Xml.XmlNode,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},Draw.io_Graph_Parser.Vertex,Draw.io_Graph_Parser.Vertex)">
+            <summary>This constructor initializes the new <c>Edge</c> from a <see cref="T:System.Xml.XmlNode"/>, from previously calculated <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/>, from the source <see cref="T:Draw.io_Graph_Parser.Vertex"/> and from the target <see cref="T:Draw.io_Graph_Parser.Vertex"/>.</summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the edge.</param>
+            <param name="styleProperties">The <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the edge.</param>
+            <param name="source">The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object that represents the node from which the edge starts.</param>
+            <param name="target">The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object that represents the node on which the edge ends.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <remarks>This constructor is useful when you extract the <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> from the <see cref="T:System.Xml.XmlNode"/> using <see cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>, in order to choose the subclass of the graph element, and you don't want to re-extract them when initializing the object.</remarks>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.Edge.#ctor(System.Xml.XmlNode,Draw.io_Graph_Parser.Vertex,Draw.io_Graph_Parser.Vertex)">
+            <summary>This constructor initializes the new <c>Edge</c> from a <see cref="T:System.Xml.XmlNode"/>, from the source <see cref="T:Draw.io_Graph_Parser.Vertex"/> and from the target <see cref="T:Draw.io_Graph_Parser.Vertex"/>.</summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the edge.</param>
+            <param name="source">The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object that represents the node from which the edge starts.</param>
+            <param name="target">The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object that represents the node on which the edge ends.</param>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.Edge.IsArrowPresent(System.String)">
+            <summary>Determines whether the specified arrow is present.</summary>
+            <param name="arrow">The name of the arrow.</param>
+            <returns><c>true</c> if the specified arrow is present; otherwise, <c>false</c>.</returns>
+            <remarks>The possible names for the arrow are: <em>endArrow</em> and <em>startArrow</em>.</remarks>
+        </member>
         <member name="T:Draw.io_Graph_Parser.GraphElement">
-            <summary>
-            Class <c>GraphElement</c> is the basic class all the elements in a graph must derive from.
-            </summary>
+            <summary>Class <c>GraphElement</c> is the basic class from which all the elements in a graph must derive.</summary>
         </member>
         <member name="P:Draw.io_Graph_Parser.GraphElement.Node">
-            <value>
-            Property <c>Node</c> represents the <see cref="T:System.Xml.XmlNode"/> the graph element comes from.
-            </value>
+            <value>Property <c>Node</c> represents the <see cref="T:System.Xml.XmlNode"/> the graph element comes from.</value>
         </member>
         <member name="P:Draw.io_Graph_Parser.GraphElement.Id">
-            <value>
-            Property <c>Id</c> represents the univocal identificator for the graph element.
-            </value>
+            <value>Property <c>Id</c> represents the univocal identifier for the graph element.</value>
         </member>
         <member name="F:Draw.io_Graph_Parser.GraphElement.vl">
-            <summary>
-            Istance variable <c>vl</c> represents the value of the graph element.
-            </summary>
-            <remarks>
-            For <see cref="T:Draw.io_Graph_Parser.Vertex">Vertices</see>, the value represents the human-readable id of the vertex; for <see cref="T:Draw.io_Graph_Parser.Edge"/>-s, it represents the cost; for <see cref="T:Draw.io_Graph_Parser.Text"/>-s, it represents the text itself.
-            </remarks>
+            <summary>Instance variable <c>vl</c> represents the value of the graph element.</summary>
+            <remarks>For <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s, the value represents the human-readable id of the vertex; for <see cref="T:Draw.io_Graph_Parser.Edge"/>-s, it represents the cost; for <see cref="T:Draw.io_Graph_Parser.Text"/>, it represents the text itself.</remarks>
         </member>
         <member name="P:Draw.io_Graph_Parser.GraphElement.Value">
-            <value>
-            Property <c>Value</c> represents the value of the graph element.
-            </value>
-            <remarks>
-            For <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s, the value represents the human-readable id of the vertex; for <see cref="T:Draw.io_Graph_Parser.Edge"/>-s, it represents the cost; for <see cref="T:Draw.io_Graph_Parser.Text"/>-s, it represents the text itself.
-            </remarks>
+            <value>Property <c>Value</c> represents the value of the graph element.</value>
+            <remarks>For a <see cref="T:Draw.io_Graph_Parser.Vertex"/>, the value represents the human-readable id of the vertex; for an <see cref="T:Draw.io_Graph_Parser.Edge"/>, it represents the cost; for a <see cref="T:Draw.io_Graph_Parser.Text"/>, it represents the text itself.</remarks>
         </member>
         <member name="P:Draw.io_Graph_Parser.GraphElement.StyleProperties">
-            <value>
-            Property <c>StyleProperties</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the graph element (such as the type).
-            </value>
+            <value>Property <c>StyleProperties</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the graph element (such as the type).</value>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.#ctor(System.Xml.XmlNode,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
-            <summary>
-            This constructor initializes the new <c>GraphElement</c> from a <see cref="T:System.Xml.XmlNode"/> and pre-calculated <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/>.
-            </summary>
-            <remarks>
-            This constructor is useful when you extract the <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> from the <see cref="T:System.Xml.XmlNode"/> using <see cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>, in order to choose the subclass of the graph element, and you don't want to re-extract them when initializing the object.
-            </remarks>
-            <seealso cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>
+            <summary>This constructor initializes the new <c>GraphElement</c> from a <see cref="T:System.Xml.XmlNode"/> and from previously calculated <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/>.</summary>
             <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the graph element.</param>
             <param name="styleProperties">The <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the graph element (such as the type).</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <remarks>This constructor is useful when you extract the <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> from the <see cref="T:System.Xml.XmlNode"/> using <see cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/> in order to choose the subclass of the graph element, and you don't want to re-extract them when initializing the object.</remarks>
+            <seealso cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.#ctor(System.Xml.XmlNode)">
-            <summary>
-            This constructor initializes the new <c>GraphElement</c> from a <see cref="T:System.Xml.XmlNode"/>.
-            </summary>
+            <summary>This constructor initializes the new <c>GraphElement</c> from a <see cref="T:System.Xml.XmlNode"/>.</summary>
             <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the graph element.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)">
-            <summary>
-            This method extracts a <see cref="T:System.Collections.Generic.List`1"/> of style properties from a <see cref="T:System.Xml.XmlNode"/>.
-            </summary>
+            <summary>This method extracts a <see cref="T:System.Collections.Generic.List`1"/> of style properties from a <see cref="T:System.Xml.XmlNode"/>.</summary>
             <param name="node">The <see cref="T:System.Xml.XmlNode"/> from which the properties are extracted.</param>
             <returns>The <see cref="T:System.Collections.Generic.List`1"/> of properties.</returns>
-            <exception cref="T:System.Xml.XmlException">
-            Thrown when the <see cref="T:System.Xml.XmlNode"/> doesn't contain a style <see cref="T:System.Xml.XmlAttribute"/>.
-            </exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Xml.XmlException"></exception>        
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.GetStylePropertyValue(System.String)">
-            <summary>
-            This method returns the value of <paramref name="property"/> style property.
-            </summary>
+            <summary>This method returns the value of <paramref name="property" /> style property.</summary>
             <param name="property">The name of the style property whose value you want to get.</param>
             <returns>The value of the style property, <c>null</c> if the property doesn't exist.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.SetStylePropertyValue(System.String,System.String)">
-            <summary>
-            This method sets the <paramref name="value"/> of <paramref name="property"/> style property.
-            </summary>
+            <summary>This method sets the <paramref name="value" /> of <paramref name="property" /> style property.</summary>
             <param name="property">The name of the style property whose value you want to set.</param>
             <param name="value">The value you want to set.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <remarks>If the property doesn't exist, it's created.</remarks>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.GetAttributeInnerText(System.String)">
-            <summary>
-            This methods returns the inner text of <paramref name="attribute"/> <see cref="T:System.Xml.XmlAttribute"/>.
-            </summary>
+            <summary>This methods returns the inner text of <paramref name="attribute" /> <see cref="T:System.Xml.XmlAttribute"/>.</summary>
             <param name="attribute">The name of the <see cref="T:System.Xml.XmlAttribute"/> whose inner text you want to get.</param>
             <returns>The inner text of the <see cref="T:System.Xml.XmlAttribute"/>, <c>null</c> if the <see cref="T:System.Xml.XmlAttribute"/> doesn't exist.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.SetAttributeInnerText(System.String,System.String)">
-            <summary>
-            This method sets the <paramref name="innerText"/> of <paramref name="attribute"/> <see cref="T:System.Xml.XmlAttribute"/>.
-            </summary>
+            <summary>This method sets the <paramref name="innerText" /> of <paramref name="attribute" /> <see cref="T:System.Xml.XmlAttribute"/>.</summary>
             <param name="attribute">The name of the <see cref="T:System.Xml.XmlAttribute"/> whose inner text you want to set.</param>
             <param name="innerText">The inner text to set.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <remarks>If the <see cref="T:System.Xml.XmlAttribute"/> doesn't exist, it's created.</remarks>
         </member>
         <member name="M:Draw.io_Graph_Parser.GraphElement.StylePropertiesToString">
+            <summary>This method converts <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> to string.</summary>
+            <returns><see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> in a string format.</returns>
+            <remarks>It's used to update the style <see cref="T:System.Xml.XmlAttribute"/> in a node when one of its properties changes.</remarks>
+            <example>
+            The following properties:
+            <list type="table"><listHeader><term>Key</term><term>Value</term></listHeader><item><description>ellipse</description><description></description></item><item><description>fillColor</description><description>‎#FFD700</description></item></list>
+            will result: "ellipse;fillColor=#FFD700;". It's important to notice that since the ellipse property doesn't have a value, in the string the <c>=</c> sign is omitted.
+            </example>
+        </member>
+        <member name="T:Draw.io_Graph_Parser.Text">
+            <summary>Class <c>Text</c> represents some text in the graph, usually the cost of an edge.</summary>
+            <seealso cref="T:Draw.io_Graph_Parser.GraphElement"/>
+            <seealso cref="T:Draw.io_Graph_Parser.Edge"/>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.Text.Parent">
+            <value>Property <c>Parent</c> represents the <see cref="T:Draw.io_Graph_Parser.GraphElement"/> to which this text is associated.</value>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.Text.#ctor(System.Xml.XmlNode,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},Draw.io_Graph_Parser.GraphElement)">
+            <summary>This constructor initializes the new <c>Text</c> from a <see cref="T:System.Xml.XmlNode"/>, from previously calculated <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> and from the <see cref="T:Draw.io_Graph_Parser.GraphElement"/> to which this text is associated.</summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the text.</param>
+            <param name="styleProperties">The <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the text.</param>
+            <param name="parent">The <see cref="T:Draw.io_Graph_Parser.GraphElement"/> that contains this text.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <remarks>This constructor is useful when you extract the <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> from the <see cref="T:System.Xml.XmlNode"/> using <see cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>, in order to choose the subclass of the graph element, and you don't want to re-extract them when initializing the object.</remarks>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.Text.#ctor(System.Xml.XmlNode,Draw.io_Graph_Parser.GraphElement)">
+            <summary>This constructor initializes the new <c>Text</c> from a <see cref="T:System.Xml.XmlNode"/> and from the <see cref="T:Draw.io_Graph_Parser.GraphElement"/> to which this text is associated.</summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the text.</param>
+            <param name="parent">The <see cref="T:Draw.io_Graph_Parser.GraphElement"/> that contains this text.</param>
+        </member>
+        <member name="T:Draw.io_Graph_Parser.NavigableNeighbor">
             <summary>
-            This method converts the <see cref="T:System.Collections.Generic.List`1"/> of style properties to a string.
+            The <c>struct </c><c>NavigableNeighbor</c> contains information about a neighbor of the vertex:
+            <list type="bullet"><item>The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object</item><item>The cost to reach the vertex</item></list>
             </summary>
-            <remarks>
-            It's used to update the style <see cref="T:System.Xml.XmlAttribute"/> in a node when one of its properties changes.
-            </remarks>
-            <returns></returns>
+        </member>
+        <member name="F:Draw.io_Graph_Parser.NavigableNeighbor.Neighbor">
+            <summary>It represents the <see cref="T:Draw.io_Graph_Parser.Vertex"/> object of the neighbor.</summary>
+        </member>
+        <member name="F:Draw.io_Graph_Parser.NavigableNeighbor.Cost">
+            <summary>It represents the cost of the <see cref="T:Draw.io_Graph_Parser.Edge"/> to reach the vertex.</summary>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.NavigableNeighbor.#ctor(Draw.io_Graph_Parser.Vertex,System.Double)">
+            <summary>This constructor initializes the new <c>NavigableNeighbor</c> from the <see cref="T:Draw.io_Graph_Parser.Vertex"/> object of the neighbor and from the cost to reach it.</summary>
+            <param name="neighbor">The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object of the neighbor.</param>
+            <param name="cost">The cost to reach the neighbor.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Draw.io_Graph_Parser.Vertex">
+            <summary>Class <c>Vertex</c> represents a node in a graph.</summary>
+            <seealso cref="T:Draw.io_Graph_Parser.GraphElement"/>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.Vertex.Neighbors">
+            <value>Property <c>NavigableNeighbors</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the vertices, at a distance of one edge, that can be reached from this vertex.</value>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.Vertex.#ctor(System.Xml.XmlNode,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>This constructor initializes the new <c>Vertex</c> from a <see cref="T:System.Xml.XmlNode"/> and from previously calculated <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/>.</summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the vertex.</param>
+            <param name="styleProperties">The <see cref="T:System.Collections.Generic.List`1"/> containing all the properties concerning the style of the vertex.</param>
+            <remarks>This constructor is useful when you extract the <see cref="P:Draw.io_Graph_Parser.GraphElement.StyleProperties"/> from the <see cref="T:System.Xml.XmlNode"/> using <see cref="M:Draw.io_Graph_Parser.GraphElement.LoadStyleProperties(System.Xml.XmlNode)"/>, in order to choose the subclass of the graph element, and you don't want to re-extract them when initializing the object.</remarks>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.Vertex.#ctor(System.Xml.XmlNode)">
+            <summary>This constructor initializes the new <c>Vertex</c> from a <see cref="T:System.Xml.XmlNode"/>.</summary>
+            <param name="node">The <see cref="T:System.Xml.XmlNode"/> that represents the vertex.</param>
         </member>
     </members>
 </doc>
