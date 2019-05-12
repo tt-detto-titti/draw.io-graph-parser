@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 
 namespace Draw.io_Graph_Parser
@@ -11,6 +13,8 @@ namespace Draw.io_Graph_Parser
     {
         /// <value>The property <c>Graph</c> represents the whole graph in XML format.</value>
         public XmlDocument Graph { get; private set; }
+        /// <value>The property <c>Root</c> represents the <see cref="XmlNode"/> containing all the <see cref="XmlNode"/>-s of the graph elements.</value>
+        public XmlNode Root { get; private set; }
         /// <value>The property <c>Vertices</c> represents the <see cref="List{T}"/> containing all the vertices of the graph.</value>
         public List<Vertex> Vertices { get; private set; }
         /// <value>The property <c>Edges</c> represents the <see cref="List{T}"/> containing all the edges of the graph.</value>
@@ -33,12 +37,13 @@ namespace Draw.io_Graph_Parser
                 Graph = new XmlDocument();
                 Graph.Load(xmlFilePath);
 
+                Root = Graph.GetElementsByTagName("root").Item(0);
                 Vertices = new List<Vertex>();
                 Edges = new List<Edge>();
                 Texts = new List<Text>();
 
                 List<CommonElement> elmnts = new List<CommonElement>();
-                foreach (XmlNode node in Graph.GetElementsByTagName("root").Item(0))
+                foreach (XmlNode node in Root)
                 {
                     XmlNode style = node.Attributes.GetNamedItem("style");
                     if (style != null) elmnts.Add(new CommonElement(node));
@@ -132,6 +137,7 @@ namespace Draw.io_Graph_Parser
                         elmn.StyleProperties,
                         GetEdgeById(elmn.GetAttributeInnerText("parent"))));
                     elements.RemoveAt(i);
+                    Root.RemoveChild(elmn.Node);
                 }
             }
         }
@@ -144,11 +150,13 @@ namespace Draw.io_Graph_Parser
                 edge.Source.Neighbors.Add(
                     new NavigableNeighbor(
                         edge.Target,
+                        edge,
                         edge.Value != "" ? Double.Parse(edge.Value) : 0));
                 if (edge.IsBidirectional)
                     edge.Target.Neighbors.Add(
                     new NavigableNeighbor(
                         edge.Source,
+                        edge,
                         edge.Value != "" ? Double.Parse(edge.Value) : 0));
             }
         }

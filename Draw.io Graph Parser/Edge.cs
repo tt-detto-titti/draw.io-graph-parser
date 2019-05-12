@@ -61,11 +61,11 @@ namespace Draw.io_Graph_Parser
                     return true;
                 else if (arrw.Value.Value != "none")
                     return true;
-                else
-                    return false;
             }
-            else if (arrw.Value.Value != "none")
-                return true;
+            else if (arrow == "startArrow")
+                if (arrw.HasValue)
+                    if (arrw.Value.Value != "none")
+                        return true;
 
             return false;
         }

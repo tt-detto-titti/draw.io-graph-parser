@@ -5,24 +5,28 @@ using System.Xml;
 namespace Draw.io_Graph_Parser
 {
     /// <summary>
-    /// The <c>struct </c><c>NavigableNeighbor</c> contains information about a neighbor of the vertex:
-    /// <list type="bullet"><item>The <see cref="Vertex"/> object</item><item>The cost to reach the vertex</item></list>
+    /// Struct <c>NavigableNeighbor</c> contains information about a neighbor of the vertex:
+    /// <list type="bullet"><item><description>The <see cref="Vertex"/> object</description></item><item><description>The cost to reach the vertex</description></item></list>
     /// </summary>
     public struct NavigableNeighbor
     {
 
         /// <summary>It represents the <see cref="Vertex"/> object of the neighbor.</summary>
         public Vertex Neighbor;
+        /// <summary>It represents the connecting <see cref="Edge"/> between the two <see cref="Vertex"/>-s.</summary>
+        public Edge ConnectingEdge;
         /// <summary>It represents the cost of the <see cref="Edge"/> to reach the vertex.</summary>
         public double Cost;
 
         /// <summary>This constructor initializes the new <c>NavigableNeighbor</c> from the <see cref="Vertex"/> object of the neighbor and from the cost to reach it.</summary>
         /// <param name="neighbor">The <see cref="Vertex"/> object of the neighbor.</param>
+        /// <param name="connectingEdge">The connecting <see cref="Edge"/> to the neighbor.</param>
         /// <param name="cost">The cost to reach the neighbor.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public NavigableNeighbor(Vertex neighbor, double cost)
+        public NavigableNeighbor(Vertex neighbor, Edge connectingEdge, double cost)
         {
             Neighbor = neighbor ?? throw new ArgumentNullException("neighbor");
+            ConnectingEdge = connectingEdge ?? throw new ArgumentNullException("connectingEdge");
             Cost = cost;
         }
     }

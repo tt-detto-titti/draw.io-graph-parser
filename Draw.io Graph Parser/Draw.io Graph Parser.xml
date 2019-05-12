@@ -4,6 +4,68 @@
         <name>Draw.io Graph Parser</name>
     </assembly>
     <members>
+        <member name="T:Draw.io_Graph_Parser.PathInformation">
+            <summary>
+            Class <c>PathInformation</c> contains information, used by the Dijkstra algorithm, about the path to reach a <see cref="T:Draw.io_Graph_Parser.Vertex"/>:
+            <list type="bullet"><item><description>The minimum cost to reach the <see cref="T:Draw.io_Graph_Parser.Vertex"/> from its <see cref="P:Draw.io_Graph_Parser.PathInformation.Predecessor"/></description></item><item><description>The <see cref="T:Draw.io_Graph_Parser.DijkstraAlgorithm"/> that comes before this one in the path from the source</description></item><item><description>The <see cref="T:Draw.io_Graph_Parser.Edge"/> that connects the two <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s</description></item></list>
+            </summary>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.PathInformation.MinimumCost">
+            <summary>It represents the minimum cost to reach the <see cref="T:Draw.io_Graph_Parser.Vertex"/> from its <see cref="P:Draw.io_Graph_Parser.PathInformation.Predecessor"/>.</summary>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.PathInformation.Predecessor">
+            <summary>It represents the <see cref="T:Draw.io_Graph_Parser.DijkstraVertex"/> that comes before this one in the path from the source.</summary>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.PathInformation.ConnectingEdge">
+            <summary>It represents the <see cref="T:Draw.io_Graph_Parser.Edge"/> that connects the two <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s.</summary>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.PathInformation.#ctor">
+            <summary>This constructor initializes the new <c>PathInformation</c> with the default values.</summary>
+            <remarks>
+            Default values are:
+            <list type="bullet"><item><description><see cref="P:Draw.io_Graph_Parser.PathInformation.MinimumCost"/>: <see cref="F:System.Double.PositiveInfinity"/></description></item><item><description><see cref="P:Draw.io_Graph_Parser.PathInformation.Predecessor"/>: <c>null</c></description></item><item><description><see cref="T:Draw.io_Graph_Parser.Edge"/>: <c>null</c></description></item></list>
+            </remarks>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.PathInformation.SetDefaultValues">
+            <summary>Resets the information about the path to the default values.</summary>
+            <remarks>
+            Default values are:
+            <list type="bullet"><item><description><see cref="P:Draw.io_Graph_Parser.PathInformation.MinimumCost"/>: <see cref="F:System.Double.PositiveInfinity"/></description></item><item><description><see cref="P:Draw.io_Graph_Parser.PathInformation.Predecessor"/>: <c>null</c></description></item><item><description><see cref="T:Draw.io_Graph_Parser.Edge"/>: <c>null</c></description></item></list>
+            </remarks>
+        </member>
+        <member name="T:Draw.io_Graph_Parser.DijkstraVertex">
+            <summary>Class <c>DijkstraVertex</c> is used by <see cref="T:Draw.io_Graph_Parser.DijkstraAlgorithm"/> to store information about the path to reach a <see cref="P:Draw.io_Graph_Parser.DijkstraVertex.Vertex"/> and the <see cref="P:Draw.io_Graph_Parser.DijkstraVertex.Vertex"/> itself.</summary>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.DijkstraVertex.Vertex">
+            <value>Property <c>Vertex</c> represents a <see cref="P:Draw.io_Graph_Parser.DijkstraVertex.Vertex"/> in the graph.</value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.DijkstraVertex.PathInformation">
+            <value>Property <c>PathInformation</c> represents the information about the path to reach <see cref="P:Draw.io_Graph_Parser.DijkstraVertex.Vertex"/>.</value>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.DijkstraVertex.#ctor(Draw.io_Graph_Parser.Vertex)">
+            <summary>This constructor initializes the new <c>DijkstraVertex</c> from the <see cref="P:Draw.io_Graph_Parser.DijkstraVertex.Vertex"/> object it represents.</summary>
+            <param name="vertex">The <see cref="P:Draw.io_Graph_Parser.DijkstraVertex.Vertex"/> of which you want to store the path information.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Draw.io_Graph_Parser.DijkstraAlgorithm">
+            <summary>Dijkstra algorithm is used, in the graph theory, to find the minimum paths from one vertex to all the other vertices of the graph.</summary>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.DijkstraAlgorithm.Vertices">
+            <value>Property <c>Vertices</c> represents all the vertices of the graph.</value>
+        </member>
+        <member name="P:Draw.io_Graph_Parser.DijkstraAlgorithm.HeapSize">
+            <value>Property <c>HeapSize</c> represents the size of the heap, a tree-based data structure, used by the algorithm.</value>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.DijkstraAlgorithm.#ctor(Draw.io_Graph_Parser.Vertex[])">
+            <summary>This constructor initializes the new <c>DijkstraAlgorithm</c> from an array containing all the <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s of the <see cref="T:Draw.io_Graph_Parser.GraphParser"/>.</summary>
+            <param name="vertices">The <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s of the <see cref="T:Draw.io_Graph_Parser.GraphParser"/>.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Draw.io_Graph_Parser.DijkstraAlgorithm.FindMinimumPathsFrom(System.String)">
+            <summary>Finds the minimum paths from the <see cref="T:Draw.io_Graph_Parser.Vertex"/> with the specified id to all the other <see cref="P:Draw.io_Graph_Parser.DijkstraAlgorithm.Vertices"/> of the graph.</summary>
+            <param name="sourceId">The id of the source <see cref="T:Draw.io_Graph_Parser.Vertex"/>.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
         <member name="T:Draw.io_Graph_Parser.Edge">
             <summary>Class <c>Edge</c> represents the connecting edge between two vertices in a graph.</summary>
             <seealso cref="T:Draw.io_Graph_Parser.GraphElement"/>
@@ -122,6 +184,9 @@
         <member name="P:Draw.io_Graph_Parser.GraphParser.Graph">
             <value>The property <c>Graph</c> represents the whole graph in XML format.</value>
         </member>
+        <member name="P:Draw.io_Graph_Parser.GraphParser.Root">
+            <value>The property <c>Root</c> represents the <see cref="T:System.Xml.XmlNode"/> containing all the <see cref="T:System.Xml.XmlNode"/>-s of the graph elements.</value>
+        </member>
         <member name="P:Draw.io_Graph_Parser.GraphParser.Vertices">
             <value>The property <c>Vertices</c> represents the <see cref="T:System.Collections.Generic.List`1"/> containing all the vertices of the graph.</value>
         </member>
@@ -195,19 +260,23 @@
         </member>
         <member name="T:Draw.io_Graph_Parser.NavigableNeighbor">
             <summary>
-            The <c>struct </c><c>NavigableNeighbor</c> contains information about a neighbor of the vertex:
-            <list type="bullet"><item>The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object</item><item>The cost to reach the vertex</item></list>
+            Struct <c>NavigableNeighbor</c> contains information about a neighbor of the vertex:
+            <list type="bullet"><item><description>The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object</description></item><item><description>The cost to reach the vertex</description></item></list>
             </summary>
         </member>
         <member name="F:Draw.io_Graph_Parser.NavigableNeighbor.Neighbor">
             <summary>It represents the <see cref="T:Draw.io_Graph_Parser.Vertex"/> object of the neighbor.</summary>
         </member>
+        <member name="F:Draw.io_Graph_Parser.NavigableNeighbor.ConnectingEdge">
+            <summary>It represents the connecting <see cref="T:Draw.io_Graph_Parser.Edge"/> between the two <see cref="T:Draw.io_Graph_Parser.Vertex"/>-s.</summary>
+        </member>
         <member name="F:Draw.io_Graph_Parser.NavigableNeighbor.Cost">
             <summary>It represents the cost of the <see cref="T:Draw.io_Graph_Parser.Edge"/> to reach the vertex.</summary>
         </member>
-        <member name="M:Draw.io_Graph_Parser.NavigableNeighbor.#ctor(Draw.io_Graph_Parser.Vertex,System.Double)">
+        <member name="M:Draw.io_Graph_Parser.NavigableNeighbor.#ctor(Draw.io_Graph_Parser.Vertex,Draw.io_Graph_Parser.Edge,System.Double)">
             <summary>This constructor initializes the new <c>NavigableNeighbor</c> from the <see cref="T:Draw.io_Graph_Parser.Vertex"/> object of the neighbor and from the cost to reach it.</summary>
             <param name="neighbor">The <see cref="T:Draw.io_Graph_Parser.Vertex"/> object of the neighbor.</param>
+            <param name="connectingEdge">The connecting <see cref="T:Draw.io_Graph_Parser.Edge"/> to the neighbor.</param>
             <param name="cost">The cost to reach the neighbor.</param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
