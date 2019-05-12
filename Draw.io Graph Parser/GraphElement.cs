@@ -87,8 +87,8 @@ namespace Draw.io_Graph_Parser
             if (property == null)
                 throw new ArgumentNullException("property");
 
-            KeyValuePair<string, string>? prpt = StyleProperties.Find(x => x.Key == property);
-            return prpt.HasValue ? prpt.Value.Value : null;
+            KeyValuePair<string, string> prpt = StyleProperties.Find(x => x.Key == property);
+            return StyleProperties.Find(x => x.Key == property).Value;
         }
 
         /// <summary>This method sets the <paramref name="value" /> of <paramref name="property" /> style property.</summary>
@@ -101,12 +101,12 @@ namespace Draw.io_Graph_Parser
             if (property == null)
                 throw new ArgumentNullException("property");
 
-            KeyValuePair<string, string>? prpt = StyleProperties.Find(x => x.Key == property);
+            KeyValuePair<string, string> prpt = StyleProperties.Find(x => x.Key == property);
 
-            if (prpt.HasValue) StyleProperties.Remove(prpt.Value);
+            if (prpt.Key != null) StyleProperties.Remove(prpt);
 
             prpt = new KeyValuePair<string, string>(property, value ?? "");
-            StyleProperties.Add(prpt.Value);
+            StyleProperties.Add(prpt);
             SetAttributeInnerText("style", StylePropertiesToString());
         }
 

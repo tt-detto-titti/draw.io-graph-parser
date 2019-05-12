@@ -33,7 +33,7 @@ namespace Draw.io_Graph_Parser
             else
                 IsBidirectional = false;
 
-            if (IsArrowPresent("startArrow"))
+            if (IsArrowPresent("startArrow") && !IsBidirectional)
             {
                 Vertex swap = Source;
                 Source = Target;
@@ -53,18 +53,18 @@ namespace Draw.io_Graph_Parser
         /// <remarks>The possible names for the arrow are: <em>endArrow</em> and <em>startArrow</em>.</remarks>
         private bool IsArrowPresent(string arrow)
         {
-            KeyValuePair<string, string>? arrw = StyleProperties.Find(x => x.Key == arrow);
+            KeyValuePair<string, string> arrw = StyleProperties.Find(a => a.Key == arrow);
 
             if (arrow == "endArrow")
             {
-                if (!arrw.HasValue)
+                if (arrw.Key == null)
                     return true;
-                else if (arrw.Value.Value != "none")
+                else if (arrw.Value != "none")
                     return true;
             }
             else if (arrow == "startArrow")
-                if (arrw.HasValue)
-                    if (arrw.Value.Value != "none")
+                if (arrw.Key != null)
+                    if (arrw.Value != "none")
                         return true;
 
             return false;
